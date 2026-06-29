@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة مركز اللياقة البدنية</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <div class="text-center mb-4">
+            <h1 class="display-5 fw-bold text-primary">🏋️‍♂️ Fitness Center Enterprise BI System</h1>
+            <p class="lead text-muted">النظام التشغيلي الموسع وإدارة الموارد</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} text-center fs-5 shadow-sm">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm border-0 bg-white text-center">
+                    <h3 class="text-secondary fs-6">إجمالي الأعضاء</h3>
+                    <p class="h2 fw-bold text-success m-0">{{ total_members }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm border-0 bg-white text-center">
+                    <h3 class="text-secondary fs-6">سجلات الحضور اليوم</h3>
+                    <p class="h2 fw-bold text-info m-0">{{ total_attendance }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm border-0 bg-white text-center">
+                    <h3 class="text-secondary fs-6">طاقم العمل (Staff)</h3>
+                    <p class="h2 fw-bold text-warning m-0">{{ total_staff }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm border-0 bg-white text-center">
+                    <h3 class="text-secondary fs-6">المعدات والأجهزة</h3>
+                    <p class="h2 fw-bold text-danger m-0">{{ total_equip }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-4">
+                <a href="/register" class="btn btn-primary btn-lg w-100 p-3 shadow-sm fw-bold">📝 تسجيل عضو جديد</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/attendance" class="btn btn-dark btn-lg w-100 p-3 shadow-sm fw-bold">🎯 تسجيل حضور يومي</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/staff" class="btn btn-warning btn-lg w-100 p-3 shadow-sm fw-bold text-dark">👥 إدارة طاقم العمل</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/equipment" class="btn btn-secondary btn-lg w-100 p-3 shadow-sm fw-bold">⚙️ المعدات والصيانة</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/dashboard" class="btn btn-danger btn-lg w-100 p-3 shadow-sm fw-bold">📊 لوحة المؤشرات BI</a>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 pt-3 border-top text-muted">
+            <small>Fitness Center End-to-End Business Intelligence Project © 2026</small>
+        </div>
+    </div>
+</body>
+</html>

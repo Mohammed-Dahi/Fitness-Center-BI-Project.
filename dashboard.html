@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة ذكاء الأعمال | BI Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-4 mb-5">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-danger">📊 لوحة القيادة وذكاء الأعمال (BI Dashboard)</h1>
+            <p class="lead text-muted">تحليلات الأداء، السلوك، والمصاريف المالية المباشرة من مستودع البيانات</p>
+            <a href="/" class="btn btn-outline-secondary mt-2">🏠 العودة للرئيسية</a>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card p-3 shadow-sm border-0 bg-white">
+                    <h4 class="text-center text-primary mb-3">توزيع نشاط الحضور حسب الباقة</h4>
+                    <div class="chart-container">
+                        <canvas id="plansChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-3 shadow-sm border-0 bg-white">
+                    <h4 class="text-center text-danger mb-3">التكاليف التشغيلية (رواتب vs صيانة)</h4>
+                    <div class="chart-container">
+                        <canvas id="costsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card p-3 shadow-sm border-0 bg-white">
+                    <h4 class="text-center text-success mb-3">تصنيف ولاء العملاء (RFM Customer Segmentation)</h4>
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="rfmChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const plansLabels = {{ plans_labels | safe }};
+        const plansData = {{ plans_data | safe }};
+        
+        const costsLabels = {{ costs_labels | safe }};
+        const costsData = {{ costs_data | safe }};
+        
+        const rfmLabels = {{ rfm_labels | safe }};
+        const rfmData = {{ rfm_data | safe }};
+
+        const ctxPlans = document.getElementById('plansChart').getContext('2d');
+        new Chart(ctxPlans, {
+            type: 'doughnut',
+            data: {
+                labels: plansLabels,
+                datasets: [{
+                    data: plansData,
+                    backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545'],
+                    hoverOffset: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        const ctxCosts = document.getElementById('costsChart').getContext('2d');
+        new Chart(ctxCosts, {
+            type: 'pie',
+            data: {
+                labels: costsLabels,
+                datasets: [{
+                    data: costsData,
+                    backgroundColor: ['#dc3545', '#fd7e14'],
+                    hoverOffset: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        const ctxRfm = document.getElementById('rfmChart').getContext('2d');
+        new Chart(ctxRfm, {
+            type: 'bar',
+            data: {
+                labels: rfmLabels,
+                datasets: [{
+                    label: 'عدد الأعضاء',
+                    data: rfmData,
+                    backgroundColor: [
+                        '#198754', // Elite
+                        '#0dcaf0', // Highly Active
+                        '#0d6efd', // Consistent
+                        '#ffc107', // At-Risk
+                        '#fd7e14', // Hibernating
+                        '#dc3545'  // Lost
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
